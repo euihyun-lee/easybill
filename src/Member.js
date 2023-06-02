@@ -1,15 +1,17 @@
-import "@coreui/coreui/dist/css/coreui.min.css";
-import { CAccordionItem, CAccordionHeader, CAccordionBody } from "@coreui/react";
+import { useState } from "react";
 
-function Member({ id, name }) {
-  return (
-    <CAccordionItem itemkey={id}>
-      <CAccordionHeader>{name}</CAccordionHeader>
-      <CAccordionBody>
-        Placeholder
-      </CAccordionBody>
-    </CAccordionItem>
-  );
+import Order from "./Order";
+
+class Member {
+  id;
+  name;
+  orders;
+  
+  constructor(id, name) {
+    this.id = id;
+    this.name = name;
+    this.orders = [new Order("temp"), new Order("temp2")];
+  }
 }
 
 export default Member;

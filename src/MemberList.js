@@ -1,15 +1,15 @@
 import "@coreui/coreui/dist/css/coreui.min.css";
 import { CAccordion } from "@coreui/react";
 
-import Member from "./Member";
+import MemberItem from "./MemberItem";
 
-function MemberList({ memberList }) {
-  const members = memberList.map(member =>
-    <Member index={member.id} name={member.name} />
+function MemberList({ memberList, setMenuVisible }) {
+  const memberItems = memberList.map(member =>
+    <MemberItem member={member} setMenuVisible={setMenuVisible} />
   );
 
   return (
-    <CAccordion>{members}</CAccordion>
+    <CAccordion alwaysOpen>{memberItems}</CAccordion>
   );
 }
 
