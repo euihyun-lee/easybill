@@ -1,11 +1,12 @@
 import "@coreui/coreui/dist/css/coreui.min.css";
-import { CCard, CCardImage, CCardBody, CCardTitle, CCardText, CButton, CRow, CCol, CFormInput } from "@coreui/react";
+import { CCard, CCloseButton, CCardImage, CCardBody, CCardTitle, CCardText, CButton, CRow, CCol, CFormInput } from "@coreui/react";
 
 import logo from './logo.svg';
 
-function OrderedItem({ order, setAmount }) {
+function OrderedItem({ order, setAmount, orderRemover }) {
   return (
     <CCard style={{ width: '18rem', height: '20rem' }}>
+      <CCloseButton onClick={orderRemover} />
       <CCardImage orientation="top" src={logo} />
       <CCardBody>
         <CCardTitle>{order.name}</CCardTitle>

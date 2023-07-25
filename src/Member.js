@@ -1,16 +1,15 @@
-import { useState } from "react";
+import { Component } from "react";
 
 import Order from "./Order";
 
 class Member {
   id;
   name;
-  orders;
-  
+  order = [];
+
   constructor(id, name) {
     this.id = id;
     this.name = name;
-    this.orders = [new Order("temp"), new Order("temp2")];
   }
 }
 

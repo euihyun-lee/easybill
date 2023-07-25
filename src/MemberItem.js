@@ -1,20 +1,21 @@
 import "@coreui/coreui/dist/css/coreui.min.css";
-import { useState } from "react";
-import { CAccordionItem, CAccordionHeader, CAccordionBody, CRow, CCol, CCard, CCardImage } from "@coreui/react";
+import { useState, useEffect } from "react";
+import { CAccordionItem, CAccordionHeader, CAccordionBody, CRow, CCol, CCard, CCloseButton, CCardImage } from "@coreui/react";
 
 import Menu from "./Menu";
 import OrderedItem from "./OrderedItem";
 
 import logo from './logo.svg';
 
-function MemberItem({ member }) {
+function MemberItem({ member, memberRemover }) {
   const [orders, setOrders] = useState([]);
+  const [total, setTotal] = useState(0);
   const [menuVisible, setMenuVisible] = useState(false);
   const setOrderAmount = target => {
     return amount => {
       let newOrders = [...orders];
       for (let order of newOrders) {
-        if (order.id == target.id) {
+        if (order.id === target.id) {
           order.amount = amount;
           break;
         }
@@ -22,11 +23,21 @@ function MemberItem({ member }) {
       setOrders(newOrders);
     }
   }
+  const orderRemover = target => {
+    return () => {
+      let idx = orders.findIndex(function(order) {return order.id === target.id});
+      if (idx > -1) {
+        let newOrders = [...orders];
+        newOrders.splice(idx, 1);
+	setOrders(newOrders);
+      }
+    }
+  }
   const orderAdder = menu => {
     let added = false;
     let newOrders = [...orders];
     for (let order of newOrders) {
-      if (order.id == menu.id) {
+      if (order.id === menu.id) {
         order.amount = order.amount + 1;
         added = true;
         break;
@@ -42,16 +53,36 @@ function MemberItem({ member }) {
       });
     }
     setOrders(newOrders);
+    setMenuVisible(false);
   }
   const orderedItems = orders.map(order =>
     <CCol xs="auto">
-      <OrderedItem order={order} setAmount={setOrderAmount(order)} />
+      <OrderedItem
+        order={order}
+        setAmount={setOrderAmount(order)}
+        orderRemover={orderRemover(order)} />
     </CCol>
   );
 
+  useEffect(() => {
+    let curTotal = 0;
+    for (let order of orders) {
+      curTotal = curTotal + order.cost * order.amount;
+    }
+    setTotal(curTotal);
+  }, [orders]);
+
   return (
     <CAccordionItem itemkey={member.id}>
-      <CAccordionHeader>{member.name}</CAccordionHeader>
+      <CAccordionHeader>
+        <CRow xs="auto">
+          <CCol xs="auto">
+            <CCloseButton onClick={memberRemover}/>
+          </CCol>
+          <CCol xs="auto">{member.name}</CCol>
+          <CCol xs="auto">{total}</CCol>
+        </CRow>
+      </CAccordionHeader>
       <CAccordionBody>
         <CRow xs="auto">
          {orderedItems}

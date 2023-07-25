@@ -13,7 +13,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <MemberList memberList={memberList} />
+      <MemberList memberList={memberList} setMemberList={setMemberList} />
       <AddButton rowAdder={MemberAdder(currentId, setCurrentId, memberList, setMemberList)} />
     </>
   );
