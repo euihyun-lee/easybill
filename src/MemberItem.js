@@ -7,8 +7,9 @@ import OrderedItem from "./OrderedItem";
 
 import logo from './logo.svg';
 
-function MemberItem({ member, memberRemover }) {
-  const [orders, setOrders] = useState([]);
+function MemberItem({ member, setOrders, memberRemover }) {
+  //const [orders, setOrders] = useState([]);
+  const orders = [...member.orders];
   const [total, setTotal] = useState(0);
   const [menuVisible, setMenuVisible] = useState(false);
   const setOrderAmount = target => {

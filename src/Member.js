@@ -5,7 +5,7 @@ import Order from "./Order";
 class Member {
   id;
   name;
-  order = [];
+  orders = [];
 
   constructor(id, name) {
     this.id = id;

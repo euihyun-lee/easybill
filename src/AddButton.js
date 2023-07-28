@@ -2,7 +2,7 @@ import "@coreui/coreui/dist/css/coreui.min.css";
 import { useState } from "react";
 import { CRow, CCol, CFormInput, CButton } from "@coreui/react";
 
-function AddButton({ rowAdder }) {
+function AddButton({ memberAdder }) {
   const [name, setName] = useState("");
   return (
     <CRow>
@@ -10,7 +10,7 @@ function AddButton({ rowAdder }) {
         <CFormInput type="text" placeholder="Name" onChange={e => setName(e.target.value)} />
       </CCol>
       <CCol>
-        <CButton type="button" onClick={() => rowAdder(name)}>Add</CButton>
+        <CButton type="button" onClick={() => memberAdder(name)}>Add</CButton>
       </CCol>
     </CRow>
   );
