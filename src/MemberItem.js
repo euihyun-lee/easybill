@@ -1,6 +1,6 @@
 import "@coreui/coreui/dist/css/coreui.min.css";
 import { useState, useEffect } from "react";
-import { CAccordionItem, CAccordionHeader, CAccordionBody, CRow, CCol, CCard, CCloseButton, CCardImage } from "@coreui/react";
+import { CAccordionItem, CAccordionHeader, CAccordionBody, CListGroup, CListGroupItem, CRow, CCol, CCard, CCloseButton } from "@coreui/react";
 
 import Menu from "./Menu";
 import OrderedItem from "./OrderedItem";
@@ -57,12 +57,10 @@ function MemberItem({ member, setOrders, memberRemover }) {
     setMenuVisible(false);
   }
   const orderedItems = orders.map(order =>
-    <CCol xs="auto">
-      <OrderedItem
-        order={order}
-        setAmount={setOrderAmount(order)}
-        orderRemover={orderRemover(order)} />
-    </CCol>
+    <OrderedItem
+      order={order}
+      setAmount={setOrderAmount(order)}
+      orderRemover={orderRemover(order)} />
   );
 
   useEffect(() => {
@@ -76,23 +74,19 @@ function MemberItem({ member, setOrders, memberRemover }) {
   return (
     <CAccordionItem itemkey={member.id}>
       <CAccordionHeader>
-        <CRow xs="auto">
+        <CRow style={{ width: '96%' }}>
           <CCol xs="auto">
             <CCloseButton onClick={memberRemover}/>
           </CCol>
-          <CCol xs="auto">{member.name}</CCol>
-          <CCol xs="auto">{total}</CCol>
+          <CCol>{member.name}</CCol>
+          <CCol style={{ textAlign: 'right' }}>{total}</CCol>
         </CRow>
       </CAccordionHeader>
       <CAccordionBody>
-        <CRow xs="auto">
+        <CListGroup flush>
          {orderedItems}
-          <CCol xs="auto">
-            <CCard className="flex-row" style={{ width: '18rem', height: '20rem' }} onClick={() => setMenuVisible(true)}>
-              <CCardImage orientation="top" src={logo} />
-            </CCard>
-          </CCol>
-        </CRow>
+          <CListGroupItem onClick={() => setMenuVisible(true)}>+ Add item</CListGroupItem>
+        </CListGroup>
       </CAccordionBody>
       <Menu visible={menuVisible} setVisible={setMenuVisible} orderAdder={orderAdder} />
     </CAccordionItem>

@@ -1,32 +1,28 @@
 import "@coreui/coreui/dist/css/coreui.min.css";
-import { CCard, CCloseButton, CCardImage, CCardBody, CCardTitle, CCardText, CButton, CRow, CCol, CFormInput } from "@coreui/react";
+import { CListGroupItem, CCloseButton, CButton, CRow, CCol, CButtonGroup, CFormInput } from "@coreui/react";
 
 import logo from './logo.svg';
 
 function OrderedItem({ order, setAmount, orderRemover }) {
   return (
-    <CCard style={{ width: '18rem', height: '20rem' }}>
-      <CCloseButton onClick={orderRemover} />
-      <CCardImage orientation="top" src={logo} />
-      <CCardBody>
-        <CCardTitle>{order.name}</CCardTitle>
-        <CCardText>{order.costText}</CCardText>
-        <CRow className="g-0">
-          <CCol className="col-auto">
+    <CListGroupItem>
+      <CRow className="align-items-center">
+        <CCloseButton onClick={orderRemover} />
+        <CCol>{order.name}</CCol>
+        <CCol>{order.costText}</CCol>
+        <CCol xs="auto">
+          <CButtonGroup role="group">
             <CButton onClick={() => order.amount > 1 ? setAmount(order.amount - 1) : setAmount(order.amount)}>-</CButton>
-          </CCol>
-          <CCol>
             <CFormInput
               type="text"
+              style={{ width: '3rem', textAlign: 'center' }}
               value={order.amount}
               onChange={e => setAmount(parseInt(e.target.value))} />
-          </CCol>
-          <CCol className="col-auto">
             <CButton onClick={() => setAmount(order.amount + 1)}>+</CButton>
-          </CCol>
-	</CRow>
-      </CCardBody>
-    </CCard>
+          </CButtonGroup>
+        </CCol>
+      </CRow>
+    </CListGroupItem>
   );
 }
 
