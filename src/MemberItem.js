@@ -74,13 +74,15 @@ function MemberItem({ member, setOrders, memberRemover }) {
   return (
     <CAccordionItem itemkey={member.id}>
       <CAccordionHeader>
-        <CRow style={{ width: '96%' }}>
-          <CCol xs="auto">
-            <CCloseButton onClick={memberRemover}/>
-          </CCol>
-          <CCol>{member.name}</CCol>
-          <CCol style={{ textAlign: 'right' }}>{total}</CCol>
-        </CRow>
+        <CCol style={{ marginRight: '4%' }}>
+          <CRow>
+            <CCol xs="auto">
+              <CCloseButton onClick={memberRemover}/>
+            </CCol>
+            <CCol>{member.name}</CCol>
+            <CCol style={{ textAlign: 'right' }}>{total}</CCol>
+          </CRow>
+        </CCol>
       </CAccordionHeader>
       <CAccordionBody>
         <CListGroup flush>
