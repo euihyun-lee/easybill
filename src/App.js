@@ -9,7 +9,22 @@ import Member from "./Member";
 function App() {
   const title = "Bluesky";
   const [currentId, setCurrentId] = useState(1);
-  const [memberList, setMemberList] = useState([]);
+  const [memberList, setMemberList] = useState(() => {
+    let localData = localStorage.getItem("memberList");
+    if (localData !== null) {
+      let localMemberList = JSON.parse(localData);
+      let maxId = 0;
+      let newMemberList = [];
+      for (let localMemberObj of localMemberList) {
+        let member = Member.parse(localMemberObj);
+        if (maxId < member.id) maxId = member.id;
+        newMemberList.push(member);
+      }
+      setCurrentId(maxId + 1);
+      return newMemberList;
+    }
+    return [];
+  });
   const [memberSetterList, setMemberSetterList] = useState([]);
   const [total, setTotal] = useState(0);
 
@@ -28,6 +43,7 @@ function App() {
       curTotal = curTotal + memberTotal;
     }
     setTotal(curTotal);
+    localStorage.setItem("memberList", JSON.stringify(memberList));
   }, [memberList]);
 
   return (
