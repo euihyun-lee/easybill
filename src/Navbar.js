@@ -1,17 +1,20 @@
 import "@coreui/coreui/dist/css/coreui.min.css";
-import { CNavbar, CContainer, CNavbarBrand } from "@coreui/react";
+import { CNavbar, CContainer, CNavbarBrand, CRow, CCol } from "@coreui/react";
 
 import logo from './logo.svg';
 
-function Navbar() {
+function Navbar({ title, total }) {
   return (
     <CNavbar colorScheme="light" className="bg-light">
-      <CContainer fluid>
-        <CNavbarBrand href="#">
+      <CCol>
+        <CNavbarBrand>
           <img src={logo} alt="logo" width="22" height="24" />
-          Navbar
-        </CNavbarBrand>
-      </CContainer>
+	  {title}
+	</CNavbarBrand>
+      </CCol>
+      <CCol style={{ textAlign: 'right' }}>
+        <CNavbarBrand>{total}</CNavbarBrand>
+      </CCol>
     </CNavbar>
   );
 }
