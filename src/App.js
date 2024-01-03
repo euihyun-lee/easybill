@@ -1,12 +1,15 @@
+import "@coreui/coreui/dist/css/coreui.min.css";
 import React, { useState, useEffect } from "react";
-import { CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter } from "@coreui/react";
 import { CButton } from "@coreui/react";
 
 import Navbar from "./Navbar";
 import Menu from "./Menu";
 import MemberList from "./MemberList";
-import AddButton from "./AddButton";
 import Member from "./Member";
+
+import ClearModal from "./modals/ClearModal";
+import ExportModal from "./modals/ExportModal";
+import MemberAddModal from "./modals/MemberAddModal";
 
 function App() {
   const title = "Bluesky";
@@ -31,6 +34,8 @@ function App() {
   const [total, setTotal] = useState(0);
   const [clearModalVisible, setClearModalVisible] = useState(false);
   const [clearConfirmed, setClearConfirmed] = useState(false);
+  const [exportModalVisible, setExportModalVisible] = useState(false);
+  const [memberAddModalVisible, setMemberAddModalVisible] = useState(false);
 
   const memberAdder = memberName => {
     setMemberList(memberList.concat(new Member(currentId, memberName)));
@@ -39,11 +44,9 @@ function App() {
 
   const managementMenus = [
     { text: "새 계산서",
-      func: () => {
-        setClearModalVisible(true);
-      }
-    },
-    { text: "계산서 내보내기", func: () => {} },
+      func: () => setClearModalVisible(true) },
+    { text: "계산서 내보내기",
+      func: () => setExportModalVisible(true) },
     { text: "계산서 불러오기", func: () => {} },
     { text: "메뉴 보기", func: () => {} },
     { text: "메뉴 내보내기", func: () => {} },
@@ -72,34 +75,25 @@ function App() {
 
   return (
     <>
-      <CModal
+      <ClearModal
         visible={clearModalVisible}
-        onClose={() => setClearModalVisible(false)}>
-        <CModalHeader onClose={() => setClearModalVisible(false)}>
-          <CModalTitle>새 계산서</CModalTitle>
-        </CModalHeader>
-        <CModalBody>
-          현재 내역을 모두 지우고 새 계산서를 준비합니다.<br/>
-          확실합니까?
-        </CModalBody>
-        <CModalFooter>
-          <CButton
-            color="primary"
-            onClick={() => {
-              setClearConfirmed(true);
-              setClearModalVisible(false);}}>
-            예
-          </CButton>
-          <CButton
-            color="secondary"
-            onClick={() => setClearModalVisible(false)}>
-            아니오
-          </CButton>
-        </CModalFooter>
-      </CModal>
+        setVisible={setClearModalVisible}
+        setConfirmed={setClearConfirmed} />
+      <ExportModal
+        visible={exportModalVisible}
+        setVisible={setExportModalVisible} />
       <Navbar title={title} total={total} managementMenus={managementMenus} />
       <MemberList memberList={memberList} setMemberList={setMemberList} />
-      <AddButton memberAdder={memberAdder} />
+      <CButton
+        color="info"
+        style={{ bottom: '2rem', right: '2rem', position: 'absolute', zIndex: '1024' }}
+        onClick={() => setMemberAddModalVisible(true)}>
+        +
+      </CButton>
+      <MemberAddModal
+        visible={memberAddModalVisible}
+        setVisible={setMemberAddModalVisible}
+        memberAdder={memberAdder} />
     </>
   );
 }
