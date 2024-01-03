@@ -1,6 +1,8 @@
 import "@coreui/coreui/dist/css/coreui.min.css";
 import React, { useState, useEffect } from "react";
 import { CButton } from "@coreui/react";
+import CIcon from "@coreui/icons-react";
+import { cilPlus } from "@coreui/icons";
 
 import Navbar from "./Navbar";
 import Menu from "./Menu";
@@ -86,9 +88,20 @@ function App() {
       <MemberList memberList={memberList} setMemberList={setMemberList} />
       <CButton
         color="info"
-        style={{ bottom: '2rem', right: '2rem', position: 'absolute', zIndex: '1024' }}
+        size="xxl"
+        style={{
+          width: '4rem',
+          height: '4rem',
+          '--cui-btn-border-radius': '2rem',
+          bottom: '1.5rem',
+          right: '1.5rem',
+          position: 'absolute',
+          zIndex: '1024' }}
         onClick={() => setMemberAddModalVisible(true)}>
-        +
+        <CIcon
+          icon={cilPlus}
+          size="xxl"
+          style={{ '--ci-primary-color': 'white' }} />
       </CButton>
       <MemberAddModal
         visible={memberAddModalVisible}

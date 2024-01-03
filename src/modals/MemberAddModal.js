@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CButton, CCol, CFormInput } from "@coreui/react";
+import { CButton, CInputGroup, CFormInput } from "@coreui/react";
 import { CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter } from "@coreui/react";
 
 function MemberAddModal({ visible, setVisible, memberAdder }) {
@@ -10,15 +10,20 @@ function MemberAddModal({ visible, setVisible, memberAdder }) {
       visible={visible}
       onClose={() => setVisible(false)}>
       <CModalHeader onClose={() => setVisible(false)}>
-        <CModalTitle>멤버 추가</CModalTitle>
+        <CModalTitle>참석자 추가</CModalTitle>
       </CModalHeader>
       <CModalBody>
-        <CCol>
+        <CInputGroup>
           <CFormInput type="text" placeholder="이름" onChange={e => setName(e.target.value)} />
-        </CCol>
-        <CCol>
-          <CButton type="button" onClick={() => memberAdder(name)}>Add</CButton>
-        </CCol>
+          <CButton
+            type="button"
+            onClick={() => {
+              memberAdder(name);
+              setVisible(false);
+            }}>
+            추가
+          </CButton>
+        </CInputGroup>
       </CModalBody>
     </CModal>
   );
