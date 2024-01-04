@@ -1,6 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { CButton, CInputGroup, CFormInput } from "@coreui/react";
-import { CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter } from "@coreui/react";
+import { CModal, CModalHeader, CModalTitle, CModalBody } from "@coreui/react";
+
+function MemberNameInput({ setName }) {
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (inputRef.current !== null) inputRef.current.focus();
+    }, 200);
+  }, [inputRef.current]);
+
+  return (
+    <CFormInput
+      ref={inputRef}
+      type="text"
+      placeholder="이름"
+      onChange={e => setName(e.target.value)} />
+  );
+}
 
 function MemberAddModal({ visible, setVisible, memberAdder }) {
   const [name, setName] = useState("");
@@ -14,7 +32,7 @@ function MemberAddModal({ visible, setVisible, memberAdder }) {
       </CModalHeader>
       <CModalBody>
         <CInputGroup>
-          <CFormInput type="text" placeholder="이름" onChange={e => setName(e.target.value)} />
+          <MemberNameInput setName={setName} />
           <CButton
             type="button"
             onClick={() => {
