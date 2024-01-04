@@ -35,7 +35,7 @@ function MemberList({ memberList, setMemberList }) {
   );
 
   return (
-    <CAccordion alwaysOpen>{memberItems}</CAccordion>
+    <CAccordion flush alwaysOpen>{memberItems}</CAccordion>
   );
 }
 
