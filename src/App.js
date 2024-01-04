@@ -1,5 +1,5 @@
 import "@coreui/coreui/dist/css/coreui.min.css";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { CButton } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { cilPlus } from "@coreui/icons";
@@ -15,20 +15,25 @@ import MemberAddModal from "./modals/MemberAddModal";
 
 function App() {
   const title = "Bluesky";
+  const parseMemberList = (memberListString) => {
+    let memberObjList = JSON.parse(memberListString);
+    let maxId = 0;
+    let parsedMemberList = [];
+    for (let memberObj of memberObjList) {
+      let member = Member.parse(memberObj);
+      if (maxId < member.id) maxId = member.id;
+      parsedMemberList.push(member);
+    }
+    return { maxId: maxId, parsedMemberList: parsedMemberList };
+  };
+
   const [currentId, setCurrentId] = useState(1);
   const [memberList, setMemberList] = useState(() => {
     let localData = localStorage.getItem("memberList");
     if (localData !== null) {
-      let localMemberList = JSON.parse(localData);
-      let maxId = 0;
-      let newMemberList = [];
-      for (let localMemberObj of localMemberList) {
-        let member = Member.parse(localMemberObj);
-        if (maxId < member.id) maxId = member.id;
-        newMemberList.push(member);
-      }
+      let { maxId, parsedMemberList } = parseMemberList(localData);
       setCurrentId(maxId + 1);
-      return newMemberList;
+      return parsedMemberList;
     }
     return [];
   });
@@ -42,7 +47,7 @@ function App() {
   const memberAdder = memberName => {
     setMemberList(memberList.concat(new Member(currentId, memberName)));
     setCurrentId(currentId + 1);
-  }
+  };
 
   const managementMenus = [
     { text: "새 계산서",
@@ -53,7 +58,7 @@ function App() {
     { text: "메뉴 보기", func: () => {} },
     { text: "메뉴 내보내기", func: () => {} },
     { text: "메뉴 불러오기", func: () => {} }
-  ]
+  ];
 
   useEffect(() => {
     let curTotal = 0;
@@ -83,7 +88,8 @@ function App() {
         setConfirmed={setClearConfirmed} />
       <ExportModal
         visible={exportModalVisible}
-        setVisible={setExportModalVisible} />
+        setVisible={setExportModalVisible}
+        exportText={JSON.stringify(memberList)} />
       <Navbar title={title} total={total} managementMenus={managementMenus} />
       <MemberList memberList={memberList} setMemberList={setMemberList} />
       <CButton
