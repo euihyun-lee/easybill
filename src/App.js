@@ -9,12 +9,16 @@ import Menu from "./Menu";
 import MemberList from "./MemberList";
 import Member from "./Member";
 
-import ClearModal from "./modals/ClearModal";
+import ConfirmNewModal from "./modals/NewModal";
 import ExportModal from "./modals/ExportModal";
 import MemberAddModal from "./modals/MemberAddModal";
 
 function App() {
-  const title = "Bluesky";
+  const [title, setTitle] = useState(() => {
+    let localData = localStorage.getItem("title");
+    if (localData !== null) return localData;
+    return "푸른하늘";
+  });
   const parseMemberList = (memberListString) => {
     let memberObjList = JSON.parse(memberListString);
     let maxId = 0;
@@ -39,7 +43,7 @@ function App() {
   });
   const [memberSetterList, setMemberSetterList] = useState([]);
   const [total, setTotal] = useState(0);
-  const [clearModalVisible, setClearModalVisible] = useState(false);
+  const [newModalVisible, setNewModalVisible] = useState(false);
   const [clearConfirmed, setClearConfirmed] = useState(false);
   const [exportModalVisible, setExportModalVisible] = useState(false);
   const [memberAddModalVisible, setMemberAddModalVisible] = useState(false);
@@ -51,7 +55,7 @@ function App() {
 
   const managementMenus = [
     { text: "새 계산서",
-      func: () => setClearModalVisible(true) },
+      func: () => setNewModalVisible(true) },
     { text: "계산서 내보내기",
       func: () => setExportModalVisible(true) },
     { text: "계산서 불러오기", func: () => {} },
@@ -70,6 +74,7 @@ function App() {
       curTotal = curTotal + memberTotal;
     }
     setTotal(curTotal);
+    localStorage.setItem("title", title);
     localStorage.setItem("memberList", JSON.stringify(memberList));
   }, [memberList]);
 
@@ -82,10 +87,11 @@ function App() {
 
   return (
     <>
-      <ClearModal
-        visible={clearModalVisible}
-        setVisible={setClearModalVisible}
-        setConfirmed={setClearConfirmed} />
+      <ConfirmNewModal
+        visible={newModalVisible}
+        setVisible={setNewModalVisible}
+        setConfirmed={setClearConfirmed}
+        setTitle={setTitle} />
       <ExportModal
         visible={exportModalVisible}
         setVisible={setExportModalVisible}
