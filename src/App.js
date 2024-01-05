@@ -5,13 +5,13 @@ import CIcon from "@coreui/icons-react";
 import { cilPlus } from "@coreui/icons";
 
 import Navbar from "./Navbar";
-import Menu from "./Menu";
 import MemberList from "./MemberList";
 import Member from "./Member";
 
 import ConfirmNewModal from "./modals/NewModal";
 import ExportModal from "./modals/ExportModal";
 import MemberAddModal from "./modals/MemberAddModal";
+import MenuModal from "./modals/MenuModal";
 
 function App() {
   const [title, setTitle] = useState(() => {
@@ -47,6 +47,7 @@ function App() {
   const [clearConfirmed, setClearConfirmed] = useState(false);
   const [exportModalVisible, setExportModalVisible] = useState(false);
   const [memberAddModalVisible, setMemberAddModalVisible] = useState(false);
+  const [menuModalVisible, setMenuModalVisible] = useState(false);
 
   const memberAdder = memberName => {
     setMemberList(memberList.concat(new Member(currentId, memberName)));
@@ -59,7 +60,8 @@ function App() {
     { text: "계산서 내보내기",
       func: () => setExportModalVisible(true) },
     { text: "계산서 불러오기", func: () => {} },
-    { text: "메뉴 보기", func: () => {} },
+    { text: "메뉴 보기",
+      func: () => setMenuModalVisible(true) },
     { text: "메뉴 내보내기", func: () => {} },
     { text: "메뉴 불러오기", func: () => {} }
   ];
@@ -96,6 +98,9 @@ function App() {
         visible={exportModalVisible}
         setVisible={setExportModalVisible}
         exportText={JSON.stringify(memberList)} />
+      <MenuModal
+        visible={menuModalVisible}
+        setVisible={setMenuModalVisible} />
       <Navbar title={title} total={total} managementMenus={managementMenus} />
       <MemberList memberList={memberList} setMemberList={setMemberList} />
       <CButton

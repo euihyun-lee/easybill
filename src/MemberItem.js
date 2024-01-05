@@ -2,13 +2,12 @@ import "@coreui/coreui/dist/css/coreui.min.css";
 import { useState, useEffect } from "react";
 import { CAccordionItem, CAccordionHeader, CAccordionBody, CListGroup, CListGroupItem, CRow, CCol, CCard, CCloseButton } from "@coreui/react";
 
-import Menu from "./Menu";
+import MenuModal from "./modals/MenuModal";
 import OrderedItem from "./OrderedItem";
 
 import logo from './logo.svg';
 
 function MemberItem({ member, setOrders, memberRemover }) {
-  //const [orders, setOrders] = useState([]);
   const orders = [...member.orders];
   const [total, setTotal] = useState(0);
   const [menuVisible, setMenuVisible] = useState(false);
@@ -30,7 +29,7 @@ function MemberItem({ member, setOrders, memberRemover }) {
       if (idx > -1) {
         let newOrders = [...orders];
         newOrders.splice(idx, 1);
-	setOrders(newOrders);
+        setOrders(newOrders);
       }
     }
   }
@@ -87,10 +86,10 @@ function MemberItem({ member, setOrders, memberRemover }) {
       <CAccordionBody>
         <CListGroup flush>
          {orderedItems}
-          <CListGroupItem onClick={() => setMenuVisible(true)}>+ Add item</CListGroupItem>
+          <CListGroupItem onClick={() => setMenuVisible(true)} style={{ paddingLeft: 'calc(var(--cui-list-group-item-padding-x) + 8px + 0.25em + 0.75rem)', paddingTop: 'calc(var(--cui-list-group-item-padding-y) + 0.375rem)' }}>+ 추가</CListGroupItem>
         </CListGroup>
       </CAccordionBody>
-      <Menu visible={menuVisible} setVisible={setMenuVisible} orderAdder={orderAdder} />
+      <MenuModal visible={menuVisible} setVisible={setMenuVisible} orderAdder={orderAdder} />
     </CAccordionItem>
   );
 }
