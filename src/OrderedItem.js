@@ -3,7 +3,7 @@ import { CListGroupItem, CCloseButton, CButton, CRow, CCol, CInputGroup, CFormIn
 import CIcon from "@coreui/icons-react";
 import { cilPlus, cilMinus } from "@coreui/icons";
 
-import { numWithCommas } from "./utils";
+import { numWithCommas, isDigit } from "./utils";
 
 import logo from './logo.svg';
 
@@ -21,6 +21,7 @@ function OrderedItem({ order, setAmount, orderRemover }) {
         <CCol xs="auto" style={{ padding: '0' }}>
           <CInputGroup>
             <CButton
+              disabled={!isDigit(tempValue) || tempValue <= 1}
               style={{ padding: '0.25rem' }}
               onClick={() => {
                 let newValue = order.amount > 1 ? order.amount - 1 : 1;
@@ -43,6 +44,7 @@ function OrderedItem({ order, setAmount, orderRemover }) {
                 setTempValue(newValue);
               }} />
             <CButton
+              disabled={!isDigit(tempValue)}
               style={{ padding: '0.25rem' }}
               onClick={() => {
                 let newValue = order.amount + 1;
