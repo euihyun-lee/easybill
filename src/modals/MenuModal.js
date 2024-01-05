@@ -37,8 +37,8 @@ function MenuModal({ visible, setVisible, orderAdder = () => {} }) {
       <CModalHeader>
         <CModalTitle>메뉴</CModalTitle>
       </CModalHeader>
-      <CModalBody>
-        <CNav variant="tabs" role="tablist">
+      <CModalBody style={{ padding: "0", overflowX: "scroll", flexShrink: "0" }}>
+        <CNav style={{ width: "max-content" }} variant="tabs" role="tablist">
           {menus.map((category) => 
             <CategoryNavItem
               id={category.id}
@@ -46,6 +46,8 @@ function MenuModal({ visible, setVisible, orderAdder = () => {} }) {
               activeKey={activeKey}
               setActiveKey={setActiveKey} />)}
         </CNav>
+      </CModalBody>
+      <CModalBody>
         <CTabContent>
           {menus.map((category) =>
             <CategoryItemList
