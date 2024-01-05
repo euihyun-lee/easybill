@@ -82,6 +82,7 @@ function App() {
 
   useEffect(() => {
     if (clearConfirmed) {
+      setCurrentId(1);
       setMemberList([]);
       setClearConfirmed(false);
     }
