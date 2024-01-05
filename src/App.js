@@ -1,24 +1,27 @@
 import "@coreui/coreui/dist/css/coreui.min.css";
 import { useState, useEffect } from "react";
-import { CButton } from "@coreui/react";
+import { CButton, CImage } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
-import { cilPlus, cilShare } from "@coreui/icons";
+import { cilUserPlus, cilShare } from "@coreui/icons";
 
 import Navbar from "./Navbar";
 import MemberList from "./MemberList";
 import Member from "./Member";
-import { getTotal, makeBill } from "./utils";
+import { getTotal, makeBill, getCurrentDate } from "./utils";
 
 import ConfirmNewModal from "./modals/NewModal";
 import ExportModal from "./modals/ExportModal";
 import MemberAddModal from "./modals/MemberAddModal";
 import MenuModal from "./modals/MenuModal";
+import CorkageModal from "./modals/CorkageModal";
+
+import deliveryIcon from "./resources/images/food-delivery-white.png";
 
 function App() {
   const [title, setTitle] = useState(() => {
     let localData = localStorage.getItem("title");
     if (localData !== null) return localData;
-    return "푸른하늘";
+    return getCurrentDate() + "푸른하늘";
   });
   const parseMemberList = (memberListString) => {
     let memberObjList = JSON.parse(memberListString);
@@ -50,6 +53,7 @@ function App() {
   const [menuModalVisible, setMenuModalVisible] = useState(false);
   const [memberAddModalVisible, setMemberAddModalVisible] = useState(false);
   const [exportTextModalVisible, setExportTextModalVisible] = useState(false);
+  const [corkageModalVisible, setCorkageModalVisible] = useState(false);
 
   const memberAdder = memberName => {
     setMemberList(memberList.concat(new Member(currentId, memberName)));
@@ -116,13 +120,35 @@ function App() {
           padding: '0px',
           paddingTop: '4px',
           paddingLeft: '4px',
-          position: 'absolute',
+          position: 'fixed',
           zIndex: '1024' }}
         onClick={() => setExportTextModalVisible(true)}>
         <CIcon
           icon={cilShare}
           size="xxl"
           style={{ color: 'white' }} />
+      </CButton>
+      <CButton
+        size="lg"
+        style={{
+          width: '4rem',
+          height: '4rem',
+          '--cui-btn-bg': '#00c4bd',
+          '--cui-btn-border-color': '#00c4bd',
+          '--cui-btn-disabled-bg': '#00c4bd',
+          '--cui-btn-disabled-border-color': '#00c4bd',
+          '--cui-btn-hover-bg': '#6eccc9',
+          '--cui-btn-hover-border-color': '#6eccc9',
+          '--cui-btn-active-bg': '#6eccc9',
+          '--cui-btn-active-border-color': '#6eccc9',
+          '--cui-btn-border-radius': '2rem',
+          bottom: '1.5rem',
+          right: '7rem',
+          padding: '0px',
+          position: 'fixed',
+          zIndex: '1024' }}
+        onClick={() => setCorkageModalVisible(true)}>
+        <CImage src={deliveryIcon} style={{ width: "40px", height: "40px" }} />
       </CButton>
       <CButton
         color="info"
@@ -134,12 +160,13 @@ function App() {
           bottom: '1.5rem',
           right: '1.5rem',
           padding: '0px',
-          paddingTop: '4px',
-          position: 'absolute',
+          paddingTop: '2px',
+          paddingLeft: '5px',
+          position: 'fixed',
           zIndex: '1024' }}
         onClick={() => setMemberAddModalVisible(true)}>
         <CIcon
-          icon={cilPlus}
+          icon={cilUserPlus}
           size="xxl"
           style={{ color: 'white' }} />
       </CButton>
@@ -153,6 +180,11 @@ function App() {
         visible={memberAddModalVisible}
         setVisible={setMemberAddModalVisible}
         memberAdder={memberAdder} />
+      <CorkageModal
+        visible={corkageModalVisible}
+        setVisible={setCorkageModalVisible}
+        memberList={memberList}
+        setMemberList={setMemberList} />
     </>
   );
 }
