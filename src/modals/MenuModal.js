@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter, CButton } from "@coreui/react";
 import { CNav, CNavItem, CNavLink, CTabContent, CTabPane } from "@coreui/react";
 
+import "../css/style.css";
 import MenuItem from "../MenuItem";
 import { menus } from "../constants";
 
@@ -37,7 +38,7 @@ function MenuModal({ visible, setVisible, orderAdder = () => {} }) {
       <CModalHeader>
         <CModalTitle>메뉴</CModalTitle>
       </CModalHeader>
-      <CModalBody style={{ padding: "0", overflowX: "scroll", flexShrink: "0" }}>
+      <CModalBody id="menu-tab" style={{ padding: "0", overflowX: "scroll", flexShrink: "0" }}>
         <CNav style={{ width: "max-content" }} variant="tabs" role="tablist">
           {menus.map((category) => 
             <CategoryNavItem

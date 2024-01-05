@@ -3,16 +3,11 @@ import { CCard, CCardImage, CCardBody, CCardTitle, CCardText, CRow, CCol } from 
 
 import { numWithCommas } from "./utils";
 
-import logo from './logo.svg';
-
 function MenuItem({ menu, orderAdder }) {
   return (
-    <CCard style={{ maxWidth: '540px' }} onClick={() => orderAdder(menu)}>
+    <CCard onClick={() => orderAdder(menu)}>
       <CRow className="g-0">
-        <CCol className="col-4">
-          <CCardImage orientation="top" src={logo} />
-        </CCol>
-        <CCol className="col-8">
+        <CCol>
           <CCardBody>
             <CCardTitle>{menu.name}</CCardTitle>
             <CCardText>{numWithCommas(menu.cost)}원</CCardText>
