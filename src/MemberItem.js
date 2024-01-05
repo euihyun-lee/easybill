@@ -4,6 +4,7 @@ import { CAccordionItem, CAccordionHeader, CAccordionBody, CListGroup, CListGrou
 
 import MenuModal from "./modals/MenuModal";
 import OrderedItem from "./OrderedItem";
+import { numWithCommas } from "./utils";
 
 import logo from './logo.svg';
 
@@ -48,7 +49,6 @@ function MemberItem({ member, setOrders, memberRemover }) {
         id: menu.id,
         name: menu.name,
         cost: menu.cost,
-        costText: menu.costText,
         amount: 1
       });
     }
@@ -79,14 +79,20 @@ function MemberItem({ member, setOrders, memberRemover }) {
               <CCloseButton onClick={memberRemover}/>
             </CCol>
             <CCol>{member.name}</CCol>
-            <CCol style={{ textAlign: 'right' }}>{total}</CCol>
+            <CCol style={{ textAlign: 'right' }}>{numWithCommas(total)}원</CCol>
           </CRow>
         </CCol>
       </CAccordionHeader>
       <CAccordionBody>
         <CListGroup flush>
          {orderedItems}
-          <CListGroupItem onClick={() => setMenuVisible(true)} style={{ paddingLeft: 'calc(var(--cui-list-group-item-padding-x) + 8px + 0.25em + 0.75rem)', paddingTop: 'calc(var(--cui-list-group-item-padding-y) + 0.375rem)' }}>+ 추가</CListGroupItem>
+          <CListGroupItem
+            style={{
+              paddingLeft: 'calc(var(--cui-list-group-item-padding-x) + 8px + 0.25em + 0.75rem)',
+              paddingTop: 'calc(var(--cui-list-group-item-padding-y) + 0.375rem)' }}
+            onClick={() => setMenuVisible(true)}>
+            + 추가
+          </CListGroupItem>
         </CListGroup>
       </CAccordionBody>
       <MenuModal visible={menuVisible} setVisible={setMenuVisible} orderAdder={orderAdder} />

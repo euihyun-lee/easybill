@@ -1,6 +1,8 @@
 import "@coreui/coreui/dist/css/coreui.min.css";
 import { CListGroupItem, CCloseButton, CButton, CRow, CCol, CButtonGroup, CFormInput } from "@coreui/react";
 
+import { numWithCommas } from "./utils";
+
 import logo from './logo.svg';
 
 function OrderedItem({ order, setAmount, orderRemover }) {
@@ -9,7 +11,7 @@ function OrderedItem({ order, setAmount, orderRemover }) {
       <CRow className="align-items-center">
         <CCloseButton onClick={orderRemover} />
         <CCol>{order.name}</CCol>
-        <CCol>{order.costText}</CCol>
+        <CCol>{numWithCommas(order.cost)}원</CCol>
         <CCol xs="auto">
           <CButtonGroup role="group">
             <CButton onClick={() => order.amount > 1 ? setAmount(order.amount - 1) : setAmount(order.amount)}>-</CButton>

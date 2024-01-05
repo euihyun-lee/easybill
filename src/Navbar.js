@@ -5,6 +5,7 @@ import CIcon from "@coreui/icons-react";
 import { cilMenu } from "@coreui/icons";
 
 import OffCanvas from "./OffCanvas";
+import { numWithCommas } from "./utils";
 
 function Navbar({ title, total, managementMenus }) {
   const [offCanvasVisible, setOffCanvasVisible] = useState(false);
@@ -30,7 +31,7 @@ function Navbar({ title, total, managementMenus }) {
           <CNavbarBrand style={{ marginLeft: '1.25rem' }}>{title}</CNavbarBrand>
         </CCol>
         <CCol style={{ textAlign: 'right' }}>
-          <CNavbarBrand>{total}</CNavbarBrand>
+          <CNavbarBrand>{numWithCommas(total)}원</CNavbarBrand>
         </CCol>
       </CNavbar>
     </>
