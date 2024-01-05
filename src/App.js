@@ -2,11 +2,12 @@ import "@coreui/coreui/dist/css/coreui.min.css";
 import { useState, useEffect } from "react";
 import { CButton } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
-import { cilPlus } from "@coreui/icons";
+import { cilPlus, cilShare } from "@coreui/icons";
 
 import Navbar from "./Navbar";
 import MemberList from "./MemberList";
 import Member from "./Member";
+import { getTotal, makeBill } from "./utils";
 
 import ConfirmNewModal from "./modals/NewModal";
 import ExportModal from "./modals/ExportModal";
@@ -46,8 +47,9 @@ function App() {
   const [newModalVisible, setNewModalVisible] = useState(false);
   const [clearConfirmed, setClearConfirmed] = useState(false);
   const [exportModalVisible, setExportModalVisible] = useState(false);
-  const [memberAddModalVisible, setMemberAddModalVisible] = useState(false);
   const [menuModalVisible, setMenuModalVisible] = useState(false);
+  const [memberAddModalVisible, setMemberAddModalVisible] = useState(false);
+  const [exportTextModalVisible, setExportTextModalVisible] = useState(false);
 
   const memberAdder = memberName => {
     setMemberList(memberList.concat(new Member(currentId, memberName)));
@@ -69,11 +71,7 @@ function App() {
   useEffect(() => {
     let curTotal = 0;
     for (let member of memberList) {
-      let memberTotal = 0;
-      for (let order of member.orders) {
-        memberTotal = memberTotal + order.cost * order.amount;
-      }
-      curTotal = curTotal + memberTotal;
+      curTotal = curTotal + getTotal(member.orders);
     }
     setTotal(curTotal);
     localStorage.setItem("title", title);
@@ -98,6 +96,8 @@ function App() {
       <ExportModal
         visible={exportModalVisible}
         setVisible={setExportModalVisible}
+        title="계산서 내보내기"
+        description={<>아래 내용을 복사하여 보관 후 <b>계산서 불러오기</b>로 불러오세요.</>}
         exportText={JSON.stringify(memberList)} />
       <MenuModal
         visible={menuModalVisible}
@@ -106,21 +106,49 @@ function App() {
       <MemberList memberList={memberList} setMemberList={setMemberList} />
       <CButton
         color="info"
-        size="xxl"
+        size="lg"
+        style={{
+          width: '4rem',
+          height: '4rem',
+          '--cui-btn-border-radius': '2rem',
+          bottom: '7rem',
+          right: '1.5rem',
+          padding: '0px',
+          paddingTop: '4px',
+          paddingLeft: '4px',
+          position: 'absolute',
+          zIndex: '1024' }}
+        onClick={() => setExportTextModalVisible(true)}>
+        <CIcon
+          icon={cilShare}
+          size="xxl"
+          style={{ color: 'white' }} />
+      </CButton>
+      <CButton
+        color="info"
+        size="lg"
         style={{
           width: '4rem',
           height: '4rem',
           '--cui-btn-border-radius': '2rem',
           bottom: '1.5rem',
           right: '1.5rem',
+          padding: '0px',
+          paddingTop: '4px',
           position: 'absolute',
           zIndex: '1024' }}
         onClick={() => setMemberAddModalVisible(true)}>
         <CIcon
           icon={cilPlus}
           size="xxl"
-          style={{ '--ci-primary-color': 'white' }} />
+          style={{ color: 'white' }} />
       </CButton>
+      <ExportModal
+        visible={exportTextModalVisible}
+        setVisible={setExportTextModalVisible}
+        title="정산하기"
+        description="아래 내용을 복사하여 정산하세요."
+        exportText={makeBill(title, memberList)} />
       <MemberAddModal
         visible={memberAddModalVisible}
         setVisible={setMemberAddModalVisible}

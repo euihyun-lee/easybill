@@ -2,7 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { CButton, CInputGroup, CFormInput } from "@coreui/react";
 import { CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter } from "@coreui/react";
 
-function TitleInput({ setTitle }) {
+import { getCurrentDate } from "../utils";
+
+function TitleInput({ title, setTitle }) {
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -15,13 +17,17 @@ function TitleInput({ setTitle }) {
     <CFormInput
       ref={inputRef}
       type="text"
-      placeholder="새 계산서"
+      value={title}
       onChange={e => setTitle(e.target.value)} />
   );
 }
 
 function NewModal({ visible, onClose }) {
-  const [tempTitle, setTempTitle] = useState("새 계산서");
+  const [tempTitle, setTempTitle] = useState(getCurrentDate());
+
+  useEffect(() => {
+    if (visible) setTempTitle(getCurrentDate());
+  }, [visible]);
 
   return (
     <CModal
@@ -32,7 +38,7 @@ function NewModal({ visible, onClose }) {
       </CModalHeader>
       <CModalBody>
         <CInputGroup>
-          <TitleInput setTitle={setTempTitle} />
+          <TitleInput title={tempTitle} setTitle={setTempTitle} />
           <CButton
             type="button"
             onClick={onClose(true, tempTitle)}>

@@ -1,11 +1,10 @@
-import "@coreui/coreui/dist/css/coreui.min.css";
 import { useState } from "react";
 import { CButton, CFormTextarea } from "@coreui/react";
 import { CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { cilClipboard } from "@coreui/icons";
 
-function ExportModal({ visible, setVisible, exportText }) {
+function ExportModal({ visible, setVisible, title, description, exportText }) {
   const [resultMsg, setResultMsg] = useState("");
   const [hasError, setHasError] = useState(false);
   const [formTextColor, setFormTextColor] = useState("var(--cui-secondary-color)");
@@ -45,17 +44,18 @@ function ExportModal({ visible, setVisible, exportText }) {
   return (
     <CModal visible={visible} onClose={onClose}>
       <CModalHeader onClose={onClose}>
-        <CModalTitle>계산서 내보내기</CModalTitle>
+        <CModalTitle>{title}</CModalTitle>
       </CModalHeader>
       <CModalBody
         style={{ '--cui-form-text-color': formTextColor }}>
-        아래 내용을 복사하여 보관 후 <b>계산서 불러오기</b>로 불러오세요.
+        {description}
         <CFormTextarea
           rows={5}
+          value={exportText}
           text={resultMsg}
           invalid={hasError}
           disabled
-          style={{ marginTop: '0.625rem' }}>{exportText}</CFormTextarea>
+          style={{ marginTop: '0.625rem' }} />
         <CButton
           color="dark"
           style={{
