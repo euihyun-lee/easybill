@@ -83,13 +83,16 @@ function MemberItem({ member, setOrders, memberRemover }) {
           </CRow>
         </CCol>
       </CAccordionHeader>
-      <CAccordionBody>
+      <CAccordionBody
+        style={{ '--cui-accordion-body-padding-y': '0.25rem' }}>
         <CListGroup flush>
          {orderedItems}
           <CListGroupItem
             style={{
               paddingLeft: 'calc(var(--cui-list-group-item-padding-x) + 8px + 0.25em + 0.75rem)',
-              paddingTop: 'calc(var(--cui-list-group-item-padding-y) + 0.375rem)' }}
+              paddingTop: 'calc(var(--cui-list-group-item-padding-y) + 0.375rem)',
+              paddingBottom: 'calc(var(--cui-list-group-item-padding-y) + 0.375rem)'
+            }}
             onClick={() => setMenuVisible(true)}>
             + 추가
           </CListGroupItem>
