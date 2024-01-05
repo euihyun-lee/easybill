@@ -4,7 +4,7 @@ import { CAccordionItem, CAccordionHeader, CAccordionBody, CListGroup, CListGrou
 
 import MenuModal from "./modals/MenuModal";
 import OrderedItem from "./OrderedItem";
-import { numWithCommas } from "./utils";
+import { numWithCommas, getTotal } from "./utils";
 
 import logo from './logo.svg';
 
@@ -63,11 +63,7 @@ function MemberItem({ member, setOrders, memberRemover }) {
   );
 
   useEffect(() => {
-    let curTotal = 0;
-    for (let order of orders) {
-      curTotal = curTotal + order.cost * order.amount;
-    }
-    setTotal(curTotal);
+    setTotal(getTotal(orders));
   }, [orders]);
 
   return (
