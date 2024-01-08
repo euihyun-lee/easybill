@@ -37,13 +37,19 @@ function MemberItem({ member, setOrders, memberRemover }) {
   const orderAdder = menu => {
     let added = false;
     let newOrders = [...orders];
-    for (let order of newOrders) {
-      if (order.id === menu.id) {
-        order.amount = order.amount + 1;
-        added = true;
-        break;
+    // id 0: corkage, 1: custom (duplicate allowed menus)
+    let duplicateAllowed = (menu.id === 0 || menu.id === 1);
+
+    if (!duplicateAllowed) {  
+      for (let order of newOrders) {
+        if (order.id === menu.id) {
+          order.amount = order.amount + 1;
+          added = true;
+          break;
+        }
       }
     }
+
     if (!added) {
       newOrders.push({
         id: menu.id,
@@ -52,6 +58,7 @@ function MemberItem({ member, setOrders, memberRemover }) {
         amount: 1
       });
     }
+
     setOrders(newOrders);
     setMenuVisible(false);
   }
@@ -94,7 +101,11 @@ function MemberItem({ member, setOrders, memberRemover }) {
           </CListGroupItem>
         </CListGroup>
       </CAccordionBody>
-      <MenuModal visible={menuVisible} setVisible={setMenuVisible} orderAdder={orderAdder} />
+      <MenuModal
+        useCustom
+        visible={menuVisible}
+        setVisible={setMenuVisible}
+        orderAdder={orderAdder} />
     </CAccordionItem>
   );
 }
