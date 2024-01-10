@@ -22,7 +22,7 @@ export const getTotal = orders => {
   return total;
 };
 
-export const makeBill = (title, memberList) => {
+export const makeBill = (title, memberList, deliveryList) => {
   let billText = "💰" + title + "💰\n";
   let total = 0;
   for (let member of memberList) {
@@ -32,6 +32,16 @@ export const makeBill = (title, memberList) => {
   }
   billText = billText + "=======\n";
   billText = billText + "총 " + numWithCommas(total) + "원";
+  
+  for (let delivery of deliveryList) {
+    billText = billText + "\n\n";
+    billText = billText + "[" + delivery.name + " (" + delivery.payer + " 결제)]\n";
+    for (let detail of delivery.details) {
+      billText = billText + "@" + detail.name + " " + numWithCommas(detail.cost) + "원\n";
+    }
+    billText = billText + "=======\n";
+    billText = billText + "총 " + numWithCommas(delivery.cost) + "원";
+  }
   return billText;
 };
 

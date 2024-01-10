@@ -1,3 +1,7 @@
+body {
+  overflow-y: hidden;
+}
+
 #menu-tab::-webkit-scrollbar {
   height: 0;
   background-color: transparent;

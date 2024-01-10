@@ -108,6 +108,7 @@ function App() {
     if (clearConfirmed) {
       setCurrentId(1);
       setMemberList([]);
+      setDeliveryList([]);
       setClearConfirmed(false);
     }
   }, [clearConfirmed]);
@@ -199,7 +200,7 @@ function App() {
         setVisible={setExportTextModalVisible}
         title="정산하기"
         description="아래 내용을 복사하여 정산하세요."
-        exportText={makeBill(title, memberList)} />
+        exportText={makeBill(title, memberList, deliveryList)} />
       <MemberAddModal
         visible={memberAddModalVisible}
         setVisible={setMemberAddModalVisible}

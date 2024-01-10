@@ -20,7 +20,7 @@ function OrderedItem({ order, setAmount, orderRemover }) {
       <CRow className="align-items-center">
         <CCloseButton onClick={orderRemover} />
         <CCol>{order.name}</CCol>
-        <CCol style={{ textAlign: "right", paddingRight: "1.5rem" }}>
+        <CCol xs="auto" style={{ textAlign: "right", paddingRight: "1.5rem" }}>
           {numWithCommas(order.cost)}원
         </CCol>
         <CCol xs="auto" style={{ padding: '0' }}>
