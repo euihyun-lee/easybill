@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { CListGroupItem, CCloseButton, CButton, CRow, CCol, CInputGroup, CFormInput } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { cilPlus, cilMinus } from "@coreui/icons";
@@ -9,6 +9,11 @@ import logo from './logo.svg';
 
 function OrderedItem({ order, setAmount, orderRemover }) {
   const [tempValue, setTempValue] = useState(order.amount);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    setTempValue(order.amount);
+  }, [order.amount]);
 
   return (
     <CListGroupItem>
@@ -26,7 +31,6 @@ function OrderedItem({ order, setAmount, orderRemover }) {
               onClick={() => {
                 let newValue = order.amount > 1 ? order.amount - 1 : 1;
                 setAmount(newValue);
-                setTempValue(newValue);
               }}>
               <CIcon
                 icon={cilMinus}
@@ -34,6 +38,7 @@ function OrderedItem({ order, setAmount, orderRemover }) {
                 style={{ '--ci-primary-color': 'white' }} />
             </CButton>
             <CFormInput
+              ref={inputRef}
               type="text"
               style={{ width: '2rem', textAlign: 'center', padding: '0' }}
               value={tempValue}
@@ -49,7 +54,6 @@ function OrderedItem({ order, setAmount, orderRemover }) {
               onClick={() => {
                 let newValue = order.amount + 1;
                 setAmount(newValue);
-                setTempValue(newValue);
               }}>
               <CIcon
                 icon={cilPlus}
