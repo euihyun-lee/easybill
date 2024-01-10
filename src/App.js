@@ -7,13 +7,13 @@ import { cilUserPlus, cilShare } from "@coreui/icons";
 import Navbar from "./Navbar";
 import MemberList from "./MemberList";
 import Member from "./Member";
-import { getTotal, makeBill, getCurrentDate } from "./utils";
+import { getTotal, makeBill, getCurrentDate, getWindowSize } from "./utils";
 
 import ConfirmNewModal from "./modals/NewModal";
 import ExportModal from "./modals/ExportModal";
 import MemberAddModal from "./modals/MemberAddModal";
 import MenuModal from "./modals/MenuModal";
-import CorkageModal from "./modals/CorkageModal";
+import DeliveryModal from "./modals/DeliveryModal";
 
 import deliveryIcon from "./resources/images/food-delivery-white.png";
 
@@ -21,7 +21,7 @@ function App() {
   const [title, setTitle] = useState(() => {
     let localData = localStorage.getItem("title");
     if (localData !== null) return localData;
-    return getCurrentDate() + "푸른하늘";
+    return getCurrentDate() + " 푸른하늘";
   });
   const parseMemberList = (memberListString) => {
     let memberObjList = JSON.parse(memberListString);
@@ -33,6 +33,14 @@ function App() {
       parsedMemberList.push(member);
     }
     return { maxId: maxId, parsedMemberList: parsedMemberList };
+  };
+  const parseDeliveryList = (deliveryListString) => {
+    let parsedDeliveryList = JSON.parse(deliveryListString);
+    let maxId = 0;
+    for (let item of parsedDeliveryList) {
+      if (maxId < item.id) maxId = item.id;
+    }
+    return { maxId: maxId, parsedDeliveryList: parsedDeliveryList };
   };
 
   const [currentId, setCurrentId] = useState(1);
@@ -53,7 +61,17 @@ function App() {
   const [menuModalVisible, setMenuModalVisible] = useState(false);
   const [memberAddModalVisible, setMemberAddModalVisible] = useState(false);
   const [exportTextModalVisible, setExportTextModalVisible] = useState(false);
-  const [corkageModalVisible, setCorkageModalVisible] = useState(false);
+  const [currentDeliveryId, setCurrentDeliveryId] = useState(1);
+  const [deliveryList, setDeliveryList] = useState(() => {
+    let localData = localStorage.getItem("deliveryList");
+    if (localData !== null) {
+      let { maxId, parsedDeliveryList } = parseDeliveryList(localData);
+      setCurrentDeliveryId(maxId + 1);
+      return parsedDeliveryList;
+    }
+    return [];
+  });
+  const [deliveryModalVisible, setDeliveryModalVisible] = useState(false);
 
   const memberAdder = memberName => {
     setMemberList(memberList.concat(new Member(currentId, memberName)));
@@ -83,6 +101,10 @@ function App() {
   }, [memberList]);
 
   useEffect(() => {
+    localStorage.setItem("deliveryList", JSON.stringify(deliveryList));
+  }, [deliveryList]);
+
+  useEffect(() => {
     if (clearConfirmed) {
       setCurrentId(1);
       setMemberList([]);
@@ -107,7 +129,9 @@ function App() {
         visible={menuModalVisible}
         setVisible={setMenuModalVisible} />
       <Navbar title={title} total={total} managementMenus={managementMenus} />
-      <MemberList memberList={memberList} setMemberList={setMemberList} />
+      <div style={{ overflowY: 'auto', height: getWindowSize().height + 'px' }}>
+        <MemberList memberList={memberList} setMemberList={setMemberList} />
+      </div>
       <CButton
         color="info"
         size="lg"
@@ -147,7 +171,7 @@ function App() {
           padding: '0px',
           position: 'fixed',
           zIndex: '1024' }}
-        onClick={() => setCorkageModalVisible(true)}>
+        onClick={() => setDeliveryModalVisible(true)}>
         <CImage src={deliveryIcon} style={{ width: "40px", height: "40px" }} />
       </CButton>
       <CButton
@@ -180,9 +204,13 @@ function App() {
         visible={memberAddModalVisible}
         setVisible={setMemberAddModalVisible}
         memberAdder={memberAdder} />
-      <CorkageModal
-        visible={corkageModalVisible}
-        setVisible={setCorkageModalVisible}
+      <DeliveryModal
+        visible={deliveryModalVisible}
+        setVisible={setDeliveryModalVisible}
+        currentId={currentDeliveryId}
+        setCurrentId={setCurrentDeliveryId}
+        deliveryList={deliveryList}
+        setDeliveryList={setDeliveryList}
         memberList={memberList}
         setMemberList={setMemberList} />
     </>

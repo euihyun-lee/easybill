@@ -1,1 +1,2 @@
-export { numWithCommas, isDigit, getCurrentDate, getTotal, makeBill } from "./utils";
+export { numWithCommas, isDigit, getCurrentDate, getTotal, makeBill, getWindowSize } from "./utils";
+export { getTextWidth, getCssStyle, getCanvasFont } from "./utils";
