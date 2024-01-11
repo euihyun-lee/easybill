@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
-import { CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter, CButton } from "@coreui/react";
+import { useState } from "react";
+import { CModal, CModalHeader, CModalTitle, CModalBody, CButton } from "@coreui/react";
 import { CNav, CNavItem, CNavLink, CTabContent, CTabPane } from "@coreui/react";
-import { CCard, CCardImage, CCardBody, CCardTitle, CCardText, CRow, CCol } from "@coreui/react";
+import { CCard, CCardBody, CCardTitle, CRow, CCol } from "@coreui/react";
 import { CInputGroup, CInputGroupText, CFormInput } from "@coreui/react";
 
 import "../css/style.css";
@@ -9,17 +9,8 @@ import MenuItem from "../MenuItem";
 import { menus } from "../constants";
 
 function CustomInput({ value, setValue }) {
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    setTimeout(() => {
-      if (inputRef.current !== null) inputRef.current.focus();
-    }, 200);
-  }, [inputRef.current]);
-
   return (
     <CFormInput
-      ref={inputRef}
       type="text"
       placeholder="기타 금액"
       onChange={e => setValue(e.target.value)} />
