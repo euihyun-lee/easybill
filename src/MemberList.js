@@ -23,7 +23,7 @@ function MemberList({ memberList, setMemberList }) {
       if (idx > -1) {
         let newMemberList = [...memberList];
         newMemberList.splice(idx, 1);
-	setMemberList(newMemberList);
+      	setMemberList(newMemberList);
       }
     }
   }
