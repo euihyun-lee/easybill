@@ -8,6 +8,7 @@ import Navbar from "./Navbar";
 import MemberList from "./MemberList";
 import Member from "./Member";
 import { getTotal, makeBill, getCurrentDate, getWindowSize } from "./utils";
+import { memberAdder } from "./utils";
 
 import ConfirmNewModal from "./modals/NewModal";
 import ExportModal from "./modals/ExportModal";
@@ -72,11 +73,6 @@ function App() {
     return [];
   });
   const [deliveryModalVisible, setDeliveryModalVisible] = useState(false);
-
-  const memberAdder = memberName => {
-    setMemberList(memberList.concat(new Member(currentId, memberName)));
-    setCurrentId(currentId + 1);
-  };
 
   const managementMenus = [
     { text: "새 계산서",
@@ -204,7 +200,7 @@ function App() {
       <MemberAddModal
         visible={memberAddModalVisible}
         setVisible={setMemberAddModalVisible}
-        memberAdder={memberAdder} />
+        memberAdder={memberAdder(currentId, setCurrentId, memberList, setMemberList)} />
       <DeliveryModal
         visible={deliveryModalVisible}
         setVisible={setDeliveryModalVisible}
