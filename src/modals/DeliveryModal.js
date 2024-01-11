@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CListGroup, CListGroupItem } from "@coreui/react";
 import { CModal, CModalTitle, CModalHeader, CModalBody } from "@coreui/react";
-import { CRow, CCol, CCloseButton } from "@coreui/react";
+import { CRow, CCol, CButton, CCloseButton } from "@coreui/react";
 import { CCard, CCardTitle, CCardBody, CCardText } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { cilPlus } from "@coreui/icons";
@@ -84,8 +84,18 @@ function DeliveryModal({ visible, setVisible, currentId, setCurrentId,
         </CModalHeader>
         <CModalBody>
           {deliveryList.map((item) => <DeliveryItem item={item} setParentVisible={setVisible} />)}
-          <CCard
-            className="align-items-center"
+          <CRow className="justify-content-center">
+          <CButton
+            color="secondary"
+            size="lg"
+            style={{
+              width: '3rem',
+              height: '3rem',
+              '--cui-btn-border-radius': '2rem',
+              padding: '0px',
+              paddingTop: '3px',
+              paddingLeft: '0px'
+            }}
             onClick={() => {
               setCorkageModalVisible(true);
               setVisible(false);
@@ -93,8 +103,9 @@ function DeliveryModal({ visible, setVisible, currentId, setCurrentId,
             <CIcon
               icon={cilPlus}
               size="xxl"
-              style={{ color: 'grey' }} />
-          </CCard>
+              style={{ color: 'white' }} />
+          </CButton>
+          </CRow>
         </CModalBody>
       </CModal>
       <CorkageModal
