@@ -54,7 +54,6 @@ function App() {
     }
     return [];
   });
-  const [memberSetterList, setMemberSetterList] = useState([]);
   const [total, setTotal] = useState(0);
   const [newModalVisible, setNewModalVisible] = useState(false);
   const [clearConfirmed, setClearConfirmed] = useState(false);
@@ -92,9 +91,12 @@ function App() {
       curTotal = curTotal + getTotal(member.orders);
     }
     setTotal(curTotal);
-    localStorage.setItem("title", title);
     localStorage.setItem("memberList", JSON.stringify(memberList));
   }, [memberList]);
+
+  useEffect(() => {
+    localStorage.setItem("title", title);
+  }, [title]);
 
   useEffect(() => {
     localStorage.setItem("deliveryList", JSON.stringify(deliveryList));
