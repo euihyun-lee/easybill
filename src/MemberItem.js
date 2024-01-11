@@ -1,12 +1,13 @@
 import "@coreui/coreui/dist/css/coreui.min.css";
 import { useState, useEffect } from "react";
-import { CAccordionItem, CAccordionHeader, CAccordionBody, CListGroup, CListGroupItem, CRow, CCol, CCard, CCloseButton } from "@coreui/react";
+import { CAccordionItem, CAccordionHeader, CAccordionBody } from "@coreui/react";
+import { CListGroup, CListGroupItem, CRow, CCol, CCloseButton } from "@coreui/react";
+import CIcon from "@coreui/icons-react";
+import { cilPlus } from "@coreui/icons";
 
 import MenuModal from "./modals/MenuModal";
 import OrderedItem from "./OrderedItem";
 import { numWithCommas, getTotal } from "./utils";
-
-import logo from './logo.svg';
 
 function MemberItem({ member, setOrders, memberRemover }) {
   const orders = [...member.orders];
@@ -92,12 +93,22 @@ function MemberItem({ member, setOrders, memberRemover }) {
          {orderedItems}
           <CListGroupItem
             style={{
-              paddingLeft: 'calc(var(--cui-list-group-item-padding-x) + 8px + 0.25em + 0.75rem)',
+              paddingLeft: 'calc(var(--cui-list-group-item-padding-x) + 8px - 0.25em + 0.75rem)',
               paddingTop: 'calc(var(--cui-list-group-item-padding-y) + 0.375rem)',
               paddingBottom: 'calc(var(--cui-list-group-item-padding-y) + 0.375rem)'
             }}
             onClick={() => setMenuVisible(true)}>
-            + 추가
+          <CRow xs={{ gutterX: 1 }} className="align-items-center">
+            <CCol xs="auto">
+              <CIcon
+                icon={cilPlus}
+                size="lg"
+                style={{ paddingTop: '3px', color: 'grey' }} />
+            </CCol>
+            <CCol>
+              메뉴 추가
+            </CCol>
+          </CRow>
           </CListGroupItem>
         </CListGroup>
       </CAccordionBody>

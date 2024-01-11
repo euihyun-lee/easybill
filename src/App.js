@@ -1,6 +1,6 @@
 import "@coreui/coreui/dist/css/coreui.min.css";
-import { useState, useEffect } from "react";
-import { CButton, CImage } from "@coreui/react";
+import { useState, useEffect, useRef, useMemo } from "react";
+import { CImage, CContainer, CRow, CCol } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { cilUserPlus, cilShare } from "@coreui/icons";
 
@@ -8,7 +8,7 @@ import Navbar from "./Navbar";
 import MemberList from "./MemberList";
 import Member from "./Member";
 import { getTotal, makeBill, getCurrentDate, getWindowSize } from "./utils";
-import { memberAdder } from "./utils";
+import { getCssStyle, memberAdder } from "./utils";
 
 import ConfirmNewModal from "./modals/NewModal";
 import ExportModal from "./modals/ExportModal";
@@ -85,6 +85,16 @@ function App() {
     { text: "메뉴 불러오기", func: () => {} }
   ];
 
+  const navBarRef = useRef(null);
+  const tabBarRef = useRef(null);
+  const bodyHeight = useMemo(() => {
+    return ('calc( ' +
+      getWindowSize().height + 'px - ' +
+      (navBarRef.current !== null ? getCssStyle(navBarRef.current, 'height') : '0px') + ' - ' +
+      (tabBarRef.current !== null ? getCssStyle(tabBarRef.current, 'height') : '0px') + ' )'
+    );
+  }, [navBarRef.current, tabBarRef.current]);
+
   useEffect(() => {
     let curTotal = 0;
     for (let member of memberList) {
@@ -127,72 +137,74 @@ function App() {
       <MenuModal
         visible={menuModalVisible}
         setVisible={setMenuModalVisible} />
-      <Navbar title={title} total={total} managementMenus={managementMenus} />
-      <div style={{ overflowY: 'auto', height: getWindowSize().height + 'px' }}>
+      <Navbar ref={navBarRef} title={title} total={total} managementMenus={managementMenus} />
+      <div
+        style={{
+          overflowX: 'hidden',
+          overflowY: 'auto',
+          height: bodyHeight
+        }}>
         <MemberList memberList={memberList} setMemberList={setMemberList} />
+        <CRow xs={{ gutterX: 2 }} className="align-items-center">
+          <CCol
+            xs="auto"
+            style={{ padding: '1rem', marginLeft: '0.75rem' }}
+            onClick={() => setMemberAddModalVisible(true)}>
+            <CIcon
+              icon={cilUserPlus}
+              size="xl"
+              style={{ color: 'grey' }} />
+          </CCol>
+          <CCol xs="auto"
+            onClick={() => setMemberAddModalVisible(true)}>
+            멤버 추가
+          </CCol>
+        </CRow>
       </div>
-      <CButton
-        color="info"
-        size="lg"
+      <CContainer
+        ref={tabBarRef}
         style={{
-          width: '4rem',
-          height: '4rem',
-          '--cui-btn-border-radius': '2rem',
-          bottom: '7rem',
-          right: '1.5rem',
-          padding: '0px',
-          paddingTop: '4px',
-          paddingLeft: '4px',
+          borderTop: '1px solid var(--cui-border-color)',
+          bottom: '0px',
           position: 'fixed',
-          zIndex: '1024' }}
-        onClick={() => setExportTextModalVisible(true)}>
-        <CIcon
-          icon={cilShare}
-          size="xxl"
-          style={{ color: 'white' }} />
-      </CButton>
-      <CButton
-        size="lg"
-        style={{
-          width: '4rem',
-          height: '4rem',
-          '--cui-btn-bg': '#00c4bd',
-          '--cui-btn-border-color': '#00c4bd',
-          '--cui-btn-disabled-bg': '#00c4bd',
-          '--cui-btn-disabled-border-color': '#00c4bd',
-          '--cui-btn-hover-bg': '#6eccc9',
-          '--cui-btn-hover-border-color': '#6eccc9',
-          '--cui-btn-active-bg': '#6eccc9',
-          '--cui-btn-active-border-color': '#6eccc9',
-          '--cui-btn-border-radius': '2rem',
-          bottom: '1.5rem',
-          right: '7rem',
-          padding: '0px',
-          position: 'fixed',
-          zIndex: '1024' }}
-        onClick={() => setDeliveryModalVisible(true)}>
-        <CImage src={deliveryIcon} style={{ width: "40px", height: "40px" }} />
-      </CButton>
-      <CButton
-        color="info"
-        size="lg"
-        style={{
-          width: '4rem',
-          height: '4rem',
-          '--cui-btn-border-radius': '2rem',
-          bottom: '1.5rem',
-          right: '1.5rem',
-          padding: '0px',
-          paddingTop: '2px',
-          paddingLeft: '5px',
-          position: 'fixed',
-          zIndex: '1024' }}
-        onClick={() => setMemberAddModalVisible(true)}>
-        <CIcon
-          icon={cilUserPlus}
-          size="xxl"
-          style={{ color: 'white' }} />
-      </CButton>
+          maxWidth: 'none',
+          zIndex: '1024'
+        }}>
+        <CRow>
+          <CCol
+            style={{
+              height: '4rem',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#00c4bd',
+              borderRight: '1px solid var(--cui-border-color)'
+            }}
+            onClick={() => setDeliveryModalVisible(true)}>
+            <CImage src={deliveryIcon} style={{ width: "40px", height: "40px" }} />
+            <div style={{ marginLeft: '0.5rem', fontSize: '1.125rem', color: 'white' }}>
+              외부 음식
+            </div>
+          </CCol>
+          <CCol
+            style={{
+              height: '4rem',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'var(--cui-info)'
+            }}
+            onClick={() => setExportTextModalVisible(true)}>
+            <CIcon
+              icon={cilShare}
+              size="xxl"
+              style={{ color: 'white' }} />
+            <div style={{ marginLeft: '0.5rem', fontSize: '1.125rem', color: 'white' }}>
+              정산하기
+            </div>
+          </CCol>
+        </CRow>
+      </CContainer>
       <ExportModal
         visible={exportTextModalVisible}
         setVisible={setExportTextModalVisible}

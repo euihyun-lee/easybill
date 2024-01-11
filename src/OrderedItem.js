@@ -5,8 +5,6 @@ import { cilPlus, cilMinus } from "@coreui/icons";
 
 import { numWithCommas, isDigit } from "./utils";
 
-import logo from './logo.svg';
-
 function OrderedItem({ order, setAmount, orderRemover }) {
   const [tempValue, setTempValue] = useState(order.amount);
   const inputRef = useRef(null);
@@ -18,7 +16,7 @@ function OrderedItem({ order, setAmount, orderRemover }) {
   return (
     <CListGroupItem>
       <CRow className="align-items-center">
-        <CCloseButton onClick={orderRemover} />
+        <CCloseButton style={{ width: '0.5em', height: '0.5em' }} onClick={orderRemover} />
         <CCol>{order.name}</CCol>
         <CCol xs="auto" style={{ textAlign: "right", paddingRight: "1.5rem" }}>
           {numWithCommas(order.cost)}원

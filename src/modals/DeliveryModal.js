@@ -143,26 +143,26 @@ function DeliveryModal({ visible, setVisible, currentId, setCurrentId,
               setParentVisible={setVisible}
               remover={deliveryRemover(item.id)} />)}
           <CRow className="justify-content-center">
-          <CButton
-            color="secondary"
-            size="lg"
-            style={{
-              width: '3rem',
-              height: '3rem',
-              '--cui-btn-border-radius': '2rem',
-              padding: '0px',
-              paddingTop: '3px',
-              paddingLeft: '0px'
-            }}
-            onClick={() => {
-              setCorkageModalVisible(true);
-              setVisible(false);
-            }}>
-            <CIcon
-              icon={cilPlus}
-              size="xxl"
-              style={{ color: 'white' }} />
-          </CButton>
+            <CButton
+              color="secondary"
+              size="lg"
+              style={{
+                width: '3rem',
+                height: '3rem',
+                '--cui-btn-border-radius': '2rem',
+                padding: '0px',
+                paddingTop: '3px',
+                paddingLeft: '0px'
+              }}
+              onClick={() => {
+                setCorkageModalVisible(true);
+                setVisible(false);
+              }}>
+              <CIcon
+                icon={cilPlus}
+                size="xxl"
+                style={{ color: 'white' }} />
+            </CButton>
           </CRow>
         </CModalBody>
       </CModal>

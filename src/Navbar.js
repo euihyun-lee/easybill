@@ -1,13 +1,13 @@
 import "@coreui/coreui/dist/css/coreui.min.css";
-import { useState, useEffect, useRef } from "react";
-import { CNavbar, CContainer, CNavbarBrand, CRow, CCol } from "@coreui/react";
+import { forwardRef, useState, useEffect, useRef } from "react";
+import { CNavbar, CNavbarBrand, CCol } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { cilMenu } from "@coreui/icons";
 
 import OffCanvas from "./OffCanvas";
 import { numWithCommas, getWindowSize, getTextWidth, getCanvasFont } from "./utils";
 
-function Navbar({ title, total, managementMenus }) {
+const Navbar = forwardRef(({ title, total, managementMenus }, ref) => {
   const totalRef = useRef(null);
   const getTotalWidth = () => getTextWidth(numWithCommas(total) + "원",
                                            getCanvasFont(totalRef.current || document.body));
@@ -25,6 +25,7 @@ function Navbar({ title, total, managementMenus }) {
         setVisible={setOffCanvasVisible}
         managementMenus={managementMenus} />
       <CNavbar
+        ref={ref}
         colorScheme="light"
         className="bg-light"
         style={{ '--cui-navbar-padding-y': '1rem',
@@ -58,6 +59,6 @@ function Navbar({ title, total, managementMenus }) {
       </CNavbar>
     </>
   );
-}
+});
 
 export default Navbar;
