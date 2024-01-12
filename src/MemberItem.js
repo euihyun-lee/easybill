@@ -7,12 +7,15 @@ import { cilPlus } from "@coreui/icons";
 
 import MenuModal from "./modals/MenuModal";
 import OrderedItem from "./OrderedItem";
+import ConfirmRemoveModal from "./modals/ConfirmRemoveModal";
 import { numWithCommas, getTotal } from "./utils";
 
 function MemberItem({ member, setOrders, memberRemover }) {
   const orders = [...member.orders];
   const [total, setTotal] = useState(0);
   const [menuVisible, setMenuVisible] = useState(false);
+  const [confirmRemoveVisible, setConfirmRemoveVisible] = useState(false);
+
   const setOrderAmount = target => {
     return amount => {
       let newOrders = [...orders];
@@ -80,7 +83,10 @@ function MemberItem({ member, setOrders, memberRemover }) {
         <CCol style={{ marginRight: '4%' }}>
           <CRow>
             <CCol xs="auto">
-              <CCloseButton onClick={memberRemover}/>
+              <CCloseButton onClick={(e) => {
+                setConfirmRemoveVisible(true);
+                e.stopPropagation();
+              }}/>
             </CCol>
             <CCol>{member.name}</CCol>
             <CCol style={{ textAlign: 'right' }}>{numWithCommas(total)}원</CCol>
@@ -117,6 +123,17 @@ function MemberItem({ member, setOrders, memberRemover }) {
         visible={menuVisible}
         setVisible={setMenuVisible}
         orderAdder={orderAdder} />
+      <ConfirmRemoveModal
+        visible={confirmRemoveVisible}
+        setVisible={setConfirmRemoveVisible}
+        remover={memberRemover}
+        title="멤버 삭제"
+        body={
+          <>
+            멤버 <b>{member.name}</b> 삭제합니다.<br/>
+            확실합니까?
+          </>
+        } />
     </CAccordionItem>
   );
 }

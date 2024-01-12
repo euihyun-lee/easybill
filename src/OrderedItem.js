@@ -3,10 +3,12 @@ import { CListGroupItem, CCloseButton, CButton, CRow, CCol, CInputGroup, CFormIn
 import CIcon from "@coreui/icons-react";
 import { cilPlus, cilMinus } from "@coreui/icons";
 
+import ConfirmRemoveModal from "./modals/ConfirmRemoveModal";
 import { numWithCommas, isDigit } from "./utils";
 
 function OrderedItem({ order, setAmount, orderRemover }) {
   const [tempValue, setTempValue] = useState(order.amount);
+  const [confirmRemoveVisible, setConfirmRemoveVisible] = useState(false);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -16,7 +18,9 @@ function OrderedItem({ order, setAmount, orderRemover }) {
   return (
     <CListGroupItem>
       <CRow className="align-items-center">
-        <CCloseButton style={{ width: '0.5em', height: '0.5em' }} onClick={orderRemover} />
+        <CCloseButton
+          style={{ width: '0.5em', height: '0.5em' }}
+          onClick={() => setConfirmRemoveVisible(true)} />
         <CCol>{order.name}</CCol>
         <CCol xs="auto" style={{ textAlign: "right", paddingRight: "1.5rem" }}>
           {numWithCommas(order.cost)}원
@@ -61,6 +65,17 @@ function OrderedItem({ order, setAmount, orderRemover }) {
           </CInputGroup>
         </CCol>
       </CRow>
+      <ConfirmRemoveModal
+        visible={confirmRemoveVisible}
+        setVisible={setConfirmRemoveVisible}
+        remover={orderRemover}
+        title="주문 내역 삭제"
+        body={
+          <>
+            주문 내역 <b>{order.name}</b> 삭제합니다.<br/>
+            확실합니까?
+          </>
+        } />
     </CListGroupItem>
   );
 }

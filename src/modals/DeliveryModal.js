@@ -8,38 +8,7 @@ import { cilPlus } from "@coreui/icons";
 
 import { numWithCommas } from "../utils";
 import CorkageModal from "./CorkageModal";
-
-function ConfirmRemoveDeliveryModal({ visible, setVisible, remover }) {
-  // TODO: 콜키지 삭제 체크 시 내역에서 콜키지도 삭제
-  return (
-    <CModal
-      visible={visible}
-      onClose={() => setVisible(false)}>
-      <CModalHeader onClose={() => setVisible(false)}>
-        <CModalTitle>외부 음식 내역 삭제</CModalTitle>
-      </CModalHeader>
-      <CModalBody>
-        해당 외부 음식 내역을 지웁니다. 확실합니까?<br/>
-        (콜키지도 삭제하려면, 주문 내역에서 지워주세요.)
-      </CModalBody>
-      <CModalFooter>
-        <CButton
-          color="primary"
-          onClick={() => {
-            remover();
-            setVisible(false);
-          }}>
-          예
-        </CButton>
-        <CButton
-          color="secondary"
-          onClick={() => setVisible(false)}>
-          아니오
-        </CButton>
-      </CModalFooter>
-    </CModal>
-  );
-}
+import ConfirmRemoveModal from "./ConfirmRemoveModal";
 
 function DeliveryDetailItem({ detail }) {
   return (
@@ -107,10 +76,17 @@ function DeliveryItem({ item, setParentVisible, remover }) {
           setDeliveryDetailVisible(false);
         }}
         item={item} />
-      <ConfirmRemoveDeliveryModal
+      <ConfirmRemoveModal
         visible={confirmRemoveDeliveryVisible}
         setVisible={setConfirmRemoveVisibleWithParent}
-        remover={remover} />
+        remover={remover}
+        title="외부 음식 내역 삭제"
+        body={
+          <>
+            해당 외부 음식 내역을 지웁니다. 확실합니까?<br/>
+            (콜키지도 삭제하려면, 주문 내역에서 지워주세요.)
+          </>
+        } />
     </>
   );
 }
@@ -119,6 +95,7 @@ function DeliveryModal({ visible, setVisible, currentId, setCurrentId,
                          deliveryList, setDeliveryList, memberList, setMemberList }) {
   const [corkageModalVisible, setCorkageModalVisible] = useState(false);
 
+  // TODO: 콜키지 삭제 체크 시 내역에서 콜키지도 삭제
   const deliveryRemover = (targetId) => {
     return () => {
       let idx = deliveryList.findIndex(function(item) {return item.id === targetId});
