@@ -30,7 +30,12 @@ function OrderedItem({ order, setAmount, orderRemover }) {
             <CButton
               color="secondary"
               disabled={!isDigit(tempValue) || tempValue <= 1}
-              style={{ padding: '0.25rem' }}
+              style={{
+                padding: '0.25rem',
+                '--cui-btn-hover-color': 'var(--cui-btn-color)',
+                '--cui-btn-hover-bg': 'var(--cui-btn-bg)',
+                '--cui-btn-hover-border-color': 'var(--cui-btn-border-color)'
+              }}
               onClick={() => {
                 let newValue = order.amount > 1 ? order.amount - 1 : 1;
                 setAmount(newValue);
@@ -54,7 +59,12 @@ function OrderedItem({ order, setAmount, orderRemover }) {
             <CButton
               color="secondary"
               disabled={!isDigit(tempValue)}
-              style={{ padding: '0.25rem' }}
+              style={{
+                padding: '0.25rem',
+                '--cui-btn-hover-color': 'var(--cui-btn-color)',
+                '--cui-btn-hover-bg': 'var(--cui-btn-bg)',
+                '--cui-btn-hover-border-color': 'var(--cui-btn-border-color)'
+              }}
               onClick={() => {
                 let newValue = order.amount + 1;
                 setAmount(newValue);
