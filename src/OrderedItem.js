@@ -28,6 +28,7 @@ function OrderedItem({ order, setAmount, orderRemover }) {
         <CCol xs="auto" style={{ padding: '0' }}>
           <CInputGroup>
             <CButton
+              color="secondary"
               disabled={!isDigit(tempValue) || tempValue <= 1}
               style={{ padding: '0.25rem' }}
               onClick={() => {
@@ -37,7 +38,7 @@ function OrderedItem({ order, setAmount, orderRemover }) {
               <CIcon
                 icon={cilMinus}
                 size="sm"
-                style={{ '--ci-primary-color': 'white' }} />
+                style={{ color: 'white' }} />
             </CButton>
             <CFormInput
               ref={inputRef}
@@ -51,6 +52,7 @@ function OrderedItem({ order, setAmount, orderRemover }) {
                 setTempValue(newValue);
               }} />
             <CButton
+              color="secondary"
               disabled={!isDigit(tempValue)}
               style={{ padding: '0.25rem' }}
               onClick={() => {
@@ -60,7 +62,7 @@ function OrderedItem({ order, setAmount, orderRemover }) {
               <CIcon
                 icon={cilPlus}
                 size="sm"
-                style={{ '--ci-primary-color': 'white' }} />
+                style={{ color: 'white' }} />
             </CButton>
           </CInputGroup>
         </CCol>

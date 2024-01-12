@@ -153,9 +153,11 @@ function App() {
             <CIcon
               icon={cilUserPlus}
               size="xl"
-              style={{ color: 'grey' }} />
+              style={{ color: '#2d1cc5' }} />
           </CCol>
-          <CCol xs="auto"
+          <CCol
+            xs="auto"
+            style={{ color: '#2d1cc5' }}
             onClick={() => setMemberAddModalVisible(true)}>
             멤버 추가
           </CCol>

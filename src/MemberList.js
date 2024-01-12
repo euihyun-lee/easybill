@@ -38,7 +38,12 @@ function MemberList({ memberList, setMemberList }) {
     <CAccordion
       flush
       alwaysOpen
-      style={{ borderBottom: '1px solid var(--cui-border-color)' }}>
+      style={{
+        borderTop: '2px solid var(--cui-border-color)',
+        borderBottom: '2px solid var(--cui-border-color)',
+        '--cui-accordion-btn-color': 'var(--cui-accordion-active-color)',
+        '--cui-accordion-btn-bg': 'var(--cui-accordion-active-bg)'
+      }}>
       {memberItems}
     </CAccordion>
   );
