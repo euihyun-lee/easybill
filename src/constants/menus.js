@@ -1,43 +1,5 @@
 export const menus = [
-  { id:1, name: "게임비", items: [
-    { id:10, name: "게임비(1시간)", cost: 3000 },
-    { id:11, name: "게임비(무제한)", cost: 5000 },
-  ]}, 
-  { id:2, name: "식사", items: [
-    { id:20, name: "떡볶이", cost: 8000 },
-    { id:21, name: "만둣국", cost: 8000 },
-    { id:22, name: "김치볶음밥", cost: 8000 },
-    { id:23, name: "제육덮밥", cost: 8000 },
-    { id:24, name: "신라면", cost: 4000 },
-    { id:25, name: "짜파게티", cost: 4000 },
-    { id:26, name: "달걀 추가", cost: 500 },
-  ]}, 
-  { id:3, name: "간단 간식", items: [
-    { id:30, name: "시리얼", cost: 5000 },
-    { id:31, name: "아이스크림", cost: 5000 },
-  ]}, 
-  { id:4, name: "안주", items: [
-    { id:40, name: "소시지", cost: 15000 },
-    { id:41, name: "떡갈비", cost: 15000 },
-    { id:42, name: "쥐포구이", cost: 7000 },
-    { id:43, name: "반건조 오징어", cost: 10000 },
-  ]}, 
-  { id:5, name: "주류", items: [
-    { id:50, name: "맥주", cost: 5000 },
-    { id:51, name: "소주", cost: 4000 },
-  ]}, 
-  { id:6, name: "카페 음료", items: [
-    { id:60, name: "아메리카노", cost: 2000 },
-    { id:61, name: "아포카토", cost: 8000 },
-    { id:62, name: "식혜", cost: 4000 },
-    { id:63, name: "수정과", cost: 4000 },
-    { id:64, name: "유자차", cost: 4000 },
-    { id:65, name: "율무차", cost: 4000 },
-    { id:66, name: "생강차", cost: 4000 },
-    { id:67, name: "대추차", cost: 4000 },
-    { id:68, name: "매실차", cost: 4000 },
-  ]}, 
-  { id:7, name: "캔/페트 음료", items: [
+  { id:7, name: "음료", items: [
     { id:70, name: "콜라", cost: 2000 },
     { id:71, name: "사이다", cost: 2000 },
     { id:72, name: "닥터 페퍼", cost: 2000 },
@@ -66,7 +28,31 @@ export const menus = [
     { id:725, name: "몬스터", cost: 2500 },
     { id:726, name: "아침햇살", cost: 2200 },
   ]}, 
-  { id:8, name: "과자류", items: [
+  { id:6, name: "카페", items: [
+    { id:60, name: "아메리카노", cost: 2000 },
+    { id:61, name: "아포카토", cost: 8000 },
+    { id:62, name: "식혜", cost: 4000 },
+    { id:63, name: "수정과", cost: 4000 },
+    { id:64, name: "유자차", cost: 4000 },
+    { id:65, name: "율무차", cost: 4000 },
+    { id:66, name: "생강차", cost: 4000 },
+    { id:67, name: "대추차", cost: 4000 },
+    { id:68, name: "매실차", cost: 4000 },
+  ]}, 
+  { id:2, name: "식사", items: [
+    { id:20, name: "떡볶이", cost: 8000 },
+    { id:21, name: "만둣국", cost: 8000 },
+    { id:22, name: "김치볶음밥", cost: 8000 },
+    { id:23, name: "제육덮밥", cost: 8000 },
+    { id:24, name: "신라면", cost: 4000 },
+    { id:25, name: "짜파게티", cost: 4000 },
+    { id:26, name: "달걀 추가", cost: 500 },
+  ]}, 
+  { id:3, name: "간식", items: [
+    { id:30, name: "시리얼", cost: 5000 },
+    { id:31, name: "아이스크림", cost: 5000 },
+  ]}, 
+  { id:8, name: "과자", items: [
     { id:80, name: "빈츠", cost: 5000 },
     { id:81, name: "오예스", cost: 5000 },
     { id:82, name: "초코파이", cost: 5000 },
@@ -89,5 +75,19 @@ export const menus = [
   { id:9, name: "컵라면", items: [
     { id:90, name: "참깨라면", cost: 2000 },
     { id:91, name: "튀김우동", cost: 2000 },
-  ]}
+  ]},
+  { id:5, name: "주류", items: [
+    { id:50, name: "맥주", cost: 5000 },
+    { id:51, name: "소주", cost: 4000 },
+  ]}, 
+  { id:4, name: "안주", items: [
+    { id:40, name: "소시지", cost: 15000 },
+    { id:41, name: "떡갈비", cost: 15000 },
+    { id:42, name: "쥐포구이", cost: 7000 },
+    { id:43, name: "반건조 오징어", cost: 10000 },
+  ]}, 
+  { id:1, name: "게임비", items: [
+    { id:10, name: "게임비(1시간)", cost: 3000 },
+    { id:11, name: "게임비(무제한)", cost: 5000 },
+  ]}, 
 ];
