@@ -1,13 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { CRow, CCol, CContainer, CButton, CFormCheck, CFormInput } from "@coreui/react";
 import { CInputGroup, CInputGroupText } from "@coreui/react";
-import { CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter } from "@coreui/react";
+import { CModal, CModalHeader, CModalTitle, CModalBody } from "@coreui/react";
 import { CListGroup, CListGroupItem } from "@coreui/react";
 import { CAlert } from "@coreui/react";
 import { CDropdown, CDropdownToggle, CDropdownMenu, CDropdownItem } from "@coreui/react";
 
 import { numWithCommas } from "../utils";
-import Member from "../Member.js";
 
 function CorkageDetailItem({ detail, setDetailCost }) {
   const [costText, setCostText] = useState(detail.cost);
@@ -125,7 +124,12 @@ function CorkageModal({ visible, setVisible,
     return () => {
       setCorkageDetailModalVisible(false);
       if (confirmed) {
-        let corkageRemain = Math.round(parseInt(corkageText) / 10);
+        let detailTotal = 0;
+        for (let detail of detailList) {
+          detailTotal = detailTotal + detail.cost;
+        }
+
+        let corkageRemain = Math.round(detailTotal / 10);
         for (let detail of detailList) {
           corkageRemain = corkageRemain - Math.round(detail.cost / 10);
         }
@@ -147,7 +151,7 @@ function CorkageModal({ visible, setVisible,
         setDeliveryList(deliveryList.concat({
           id: currentDeliveryId,
           name: corkageName,
-          cost: parseInt(corkageText),  // TODO: text -> number 변환
+          cost: detailTotal,
           payer: payer,
           details: [...detailList]
         }));
