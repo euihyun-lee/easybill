@@ -52,7 +52,8 @@ function OrderedItem({ order, setAmount, orderRemover }) {
               value={tempValue}
               onChange={e => setTempValue(e.target.value)}
               onBlur={e => {
-                let newValue = parseInt(e.target.value) ? parseInt(e.target.value) : order.amount;
+                let newValue = (parseInt(e.target.value) && parseInt(e.target.value) > 0) ?
+                  parseInt(e.target.value) : order.amount;
                 setAmount(newValue);
                 setTempValue(newValue);
               }} />
