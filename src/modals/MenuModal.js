@@ -44,7 +44,7 @@ function CategoryItemList({ id, items, orderAdder, activeKey }) {
 // XXX: id for custom?
 // TODO: customCostText: text -> number 변환 필요
 function MenuModal({ visible, setVisible, orderAdder = () => {}, useCustom = false }) {
-  const [activeKey, setActiveKey] = useState(1);
+  const [activeKey, setActiveKey] = useState(7);  // beverage category ID
   const [customCostText, setCustomCostText] = useState("");
 
   return (
@@ -53,7 +53,13 @@ function MenuModal({ visible, setVisible, orderAdder = () => {}, useCustom = fal
         <CModalTitle>메뉴</CModalTitle>
       </CModalHeader>
       <CModalBody id="menu-tab" style={{ padding: "0", overflowX: "scroll", flexShrink: "0" }}>
-        <CNav style={{ width: "max-content" }} variant="tabs" role="tablist">
+        <CNav
+          style={{
+            width: "max-content",
+            '--cui-nav-link-padding-x': 'calc( var(--cui-nav-link-padding-y) * 1.5 )'
+          }}
+          variant="tabs"
+          role="tablist">
           {menus.map((category) => 
             <CategoryNavItem
               id={category.id}

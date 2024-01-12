@@ -166,7 +166,7 @@ function App() {
       <CContainer
         ref={tabBarRef}
         style={{
-          borderTop: '1px solid var(--cui-border-color)',
+          borderTop: '2px solid var(--cui-border-color)',
           bottom: '0px',
           position: 'fixed',
           maxWidth: 'none',
